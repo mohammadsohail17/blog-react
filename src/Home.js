@@ -1,17 +1,17 @@
+import { useEffect, useState } from "react";
+import BlogList from "./Bloglist";
+import useFetch from "./useFetch";
+
 const Home = () => {
-    const handleClick=(e)=>{
-        console.log("hello there",e)
-    }
-    const handleClickAgain=(name)=>{
-        console.log('hello'+name)
-    }
-    return ( 
-        <div className="home">
-            <h2>Home Page</h2>
-            <button onClick={handleClick}>Click me</button>
-            <button onClick={()=>{handleClickAgain('MG')}}>again Click me</button>
-        </div>
-     );
+  const {data:blogs,isPending,error}=useFetch('http://localhost:8000/blogs')
+
+  return (
+    <div className="home">
+      { error && <div>{ error }</div> }
+      { isPending && <div>Loading...</div> }
+      { blogs && <BlogList blogs={blogs} /> }
+    </div>
+  );
 }
  
 export default Home;
